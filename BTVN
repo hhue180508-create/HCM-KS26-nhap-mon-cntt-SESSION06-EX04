@@ -1,0 +1,33 @@
+Phần 1. Bảng so sánh > và >> trong PowerShell
+Tiêu chí
+> và Out-File
+>> và Add-Content
+Cơ chế hoạt động
+Ghi dữ liệu vào file, ghi đè nội dung cũ nếu file đã tồn tại.
+Ghi thêm dữ liệu vào cuối file, giữ nguyên nội dung cũ.
+Rủi ro mất dữ liệu
+Cao, vì nội dung nhật ký cũ có thể bị xóa khi ghi đè.
+Thấp hơn, vì không xóa nội dung cũ, nhưng vẫn có thể ghi sai hoặc trùng dữ liệu.
+Ngữ cảnh sử dụng
+Phù hợp tạo báo cáo mới hoặc ghi đè báo cáo của ca sáng khi cần làm mới dữ liệu.
+Phù hợp ghi nhật ký bảo trì liên tục, theo dõi hệ thống 24/7.
+Lệnh tương đương
+"Fixed bug" \| Out-File history.txt
+"Fixed bug" \| Add-Content history.txt
+
+Ví dụ minh họa:
+Giả sử history.txt đang có nội dung:
+08:00 - Kiểm tra hệ thống
+09:00 - Sao lưu dữ liệu
+Khi chạy "Fixed bug" > history.txt, nội dung cũ bị thay thế bằng Fixed bug.
+Khi chạy "Fixed bug" >> history.txt, nội dung cũ được giữ lại và thêm dòng Fixed bug vào cuối file.
+Phần 2. Cảnh báo: Vì sao gõ nhầm > là thảm họa?
+Trong môi trường ngân hàng, nhật ký bảo trì là bằng chứng quan trọng để theo dõi hoạt động hệ thống, kiểm tra sự cố và phục vụ kiểm toán.
+Nếu An vô tình dùng > thay vì >>, toàn bộ nội dung cũ trong history.txt có thể bị ghi đè. Điều này dẫn đến:
+Mất lịch sử bảo trì: Không còn thông tin về những lần kiểm tra và sửa lỗi trước đó.
+Khó điều tra sự cố: Nhân viên không thể dựa vào nhật ký đầy đủ để xác định nguyên nhân và thời điểm xảy ra lỗi.
+Ảnh hưởng đến kiểm toán: Thiếu dữ liệu có thể làm giảm khả năng chứng minh các hoạt động bảo trì đã diễn ra.
+Rủi ro vận hành: Việc mất nhật ký có thể gây khó khăn khi phát hiện và xử lý sự cố hệ thống ngân hàng.
+Giải pháp: Khi cần ghi nhật ký liên tục, An nên sử dụng Add-Content hoặc toán tử >> để bổ sung dữ liệu mà không xóa lịch sử cũ. Đồng thời, cần sao lưu định kỳ, phân quyền truy cập và kiểm tra nhật ký sau khi ghi.
+Kết luận: > dùng để ghi đè, còn >> dùng để ghi nối tiếp. Trong hệ thống ngân hàng, nhầm lẫn hai toán tử này có thể gây mất dữ liệu lịch sử quan trọng, vì vậy phải lựa chọn đúng lệnh trước khi thực thi script.
+
